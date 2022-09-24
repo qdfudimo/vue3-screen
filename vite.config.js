@@ -14,7 +14,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
-    }
+    },
+    extensions:['.js', '.vue', '.jsx', '.tsx', '.json']
   },
   plugins: [
     vue(),

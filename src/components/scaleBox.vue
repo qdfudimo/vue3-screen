@@ -1,5 +1,5 @@
 <template>
-    <div class="ScaleBox" :ref="scaleBox" :style="{
+    <div class="ScaleBox" :style="{
       width: width + 'px',
       height: height + 'px',
     }">
@@ -10,7 +10,6 @@
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { debounce } from "../util/index"
-let scaleBox = ref("");
 let scale = reactive({
     w:1,
     h:1,

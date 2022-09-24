@@ -4,7 +4,8 @@ import * as echarts from "echarts/core";
 /** 引入柱状图and折线图图表，图表后缀都为 Chart  */
 import {
     BarChart,
-    LineChart
+    LineChart,
+    MapChart
 } from "echarts/charts";
 
 // 引入提示框，标题，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
@@ -14,6 +15,9 @@ import {
     GridComponent,
     DatasetComponent,
     TransformComponent,
+    ToolboxComponent,
+    GeoComponent,
+    VisualMapComponent
 } from "echarts/components";
 
 // 标签自动布局，全局过渡动画等特性
@@ -39,6 +43,10 @@ echarts.use([
     UniversalTransition,
     CanvasRenderer,
     LineChart,
+    ToolboxComponent,
+    GeoComponent,
+    MapChart,
+    VisualMapComponent
 ]);
 
 // 导出

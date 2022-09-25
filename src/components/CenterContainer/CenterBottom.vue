@@ -1,4 +1,5 @@
 <template>
+    <!-- <div class="center-bottom"> -->
     <div class="center-bottom" @mouseenter="enterLine" @mouseleave="leaveLine">
         <BorderBox13>
             <div class="map" ref="lineRef"></div>
@@ -10,7 +11,10 @@ import { BorderBox13 } from '@kjgl77/datav-vue3'
 import { inject, onMounted, onUnmounted, ref } from 'vue';
 const lineRef = ref(null)
 let lineChart = null;
-let xLabel = ['7.30', '7.31', '08.01', '08.04', '08.02', '08.07', '08.05'];
+let xLabel = ['7.30', '7.31', '08.01', '08.02', '08.03', '08.04', '08.05'];
+let xLabelCopy = ['7.30', '7.31', '08.01', '08.02', '08.03', '08.04', '08.05', '08.06', '08.07', '08.08', '08.09', '08.10'];
+let conformData = [820, 932, 901, 934, 560, 1330, 130];
+let conformDataCopy = [820, 932, 901, 934, 560, 1330, 130, 120, 350, 360, 654, 489];
 let timer = null;
 let echarts = inject("echarts")
 const option = {
@@ -110,7 +114,7 @@ const option = {
     },
     series: [
         {
-            data: [820, 932, 901, 934, 560, 1330, 130],
+            data: conformData,
             type: 'line',
             smooth: true,
             //折线上的圆点大小
@@ -118,13 +122,13 @@ const option = {
             // areaStyle: {},
             //是否连接空数据。
             connectNulls: true,
-            itemStyle:{
-              normal:{
-                  color:'#fff',//拐点颜色
-                  borderColor:'#000000',//拐点边框颜色
-                  borderWidth:3//拐点边框大小
-              },
-              emphasis: {
+            itemStyle: {
+                normal: {
+                    color: '#fff',//拐点颜色
+                    borderColor: '#000000',//拐点边框颜色
+                    borderWidth: 3//拐点边框大小
+                },
+                emphasis: {
                     color: 'transparent'//hover拐点颜色定义
                 }
             },
@@ -176,10 +180,10 @@ const changeLine = () => {
             dataIndex: len,
         })
         len++
-    }, 1000)
+    }, 2000)
 }
 const clearTime = () => {
-    clearInterval(timer)
+    timer && clearInterval(timer)
     timer = null;
 }
 const enterLine = () => {
@@ -188,15 +192,44 @@ const enterLine = () => {
 const leaveLine = () => {
     changeLine()
 }
+let dataTime = null;
+let XLen = xLabel.length || 7
+const pushConformData = () => {
+    dataTime = setInterval(() => {
+        if (XLen == xLabelCopy.length) {
+            XLen = 0
+        }
+        xLabel.shift()
+        xLabel.push(xLabelCopy[XLen])
+        conformData.shift()
+        conformData.push(conformDataCopy[XLen])
+        lineChart.setOption({
+            xAxis:
+            {
+                data: xLabel
+            }
+            ,
+            series: [
+                {
+                    data: conformData
+                }
+            ]
+        });
+        XLen++
+    }, 2000)
+}
 onMounted(() => {
     lineChart = echarts.init(lineRef.value)
     lineChart && lineChart.setOption(option);
     changeLine()
+    pushConformData()
 })
 onUnmounted(() => {
     lineChart && lineChart.dispose();
     lineChart = null;
     clearTime()
+    dataTime && clearInterval(dataTime)
+    dataTime=null
 })
 </script>
 <style lang="less" scoped>

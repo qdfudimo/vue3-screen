@@ -5,6 +5,7 @@ import * as echarts from "echarts/core";
 import {
     BarChart,
     LineChart,
+    GraphChart,
     MapChart
 } from "echarts/charts";
 
@@ -35,6 +36,7 @@ import {
 // 注册必须的组件
 echarts.use([
     TitleComponent,
+    GraphChart,
     DataZoomComponent,
     TooltipComponent,
     GridComponent,

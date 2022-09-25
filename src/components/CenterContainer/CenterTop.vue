@@ -1,9 +1,7 @@
 <template>
     <div class="center-top">
         <BorderBox12>
-            <div class="map" ref="mapRef">
-
-            </div>
+            <div class="map" ref="mapRef"></div>
         </BorderBox12>
     </div>
 </template>
@@ -12,7 +10,7 @@ import { BorderBox12 } from '@kjgl77/datav-vue3'
 import chinaJSON from "/public/china.json"
 import { inject, onMounted, nextTick, onUnmounted, ref } from 'vue';
 const mapRef = ref(null)
-const myChart = ref(null)
+let myChart = null
 let echarts = inject("echarts")
 var data = [{
     name: '北京',
@@ -151,6 +149,7 @@ const option = {
             color: '#black',
             fontSize: 14
         },
+        // selectedMode:false,
         pieces: [{
             gt: 10000,
             label: "> 10000人",
@@ -254,13 +253,13 @@ const option = {
     }]
 };
 onMounted(() => {
-    myChart.value = echarts.init(mapRef.value)
+    myChart = echarts.init(mapRef.value)
     echarts.registerMap('china', chinaJSON) //注册可用的地图
-    myChart.value && myChart.value.setOption(option);
+    myChart && myChart.setOption(option);
 })
 onUnmounted(() => {
-    myChart.value && myChart.value.dispose();
-    myChart.value = null;
+    myChart && myChart.dispose();
+    myChart = null;
 })
 
 </script>

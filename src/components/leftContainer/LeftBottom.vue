@@ -14,7 +14,7 @@ const config = reactive({
     evenRowBGC:"rgba(4,49,128,.3)",
     headerBGC:"rgba(4,49,128,.6)",
     columnWidth: [56,76,120],
-    waitTime:1000000000,
+    waitTime:1000,
     headerHeight:42,
     rowNum:6,
     align:["center","center","center","center","center"],

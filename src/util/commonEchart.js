@@ -17,7 +17,8 @@ import {
     TransformComponent,
     ToolboxComponent,
     GeoComponent,
-    VisualMapComponent
+    VisualMapComponent,
+    DataZoomComponent
 } from "echarts/components";
 
 // 标签自动布局，全局过渡动画等特性
@@ -34,6 +35,7 @@ import {
 // 注册必须的组件
 echarts.use([
     TitleComponent,
+    DataZoomComponent,
     TooltipComponent,
     GridComponent,
     DatasetComponent,

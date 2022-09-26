@@ -56,6 +56,7 @@ const leaveLine = () => {
 let dataTime = null;
 let XLen = xLabel.value.length || 7
 const pushConformData = () => {
+    if (!lineChart) return
     dataTime = setInterval(() => {
         if (XLen == props.xLabel.length) {
             XLen = 0
@@ -240,9 +241,11 @@ const drawChats = () => {
 onMounted(() => {
     watch(() => props.xLabel, () => {
         drawChats()
+        if (lineChart) {
+            changeLine()
+            pushConformData()
+        }
     })
-    changeLine()
-    pushConformData()
 })
 onUnmounted(() => {
     lineChart && lineChart.dispose();

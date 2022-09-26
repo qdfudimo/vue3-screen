@@ -2,21 +2,24 @@
     <div class="right-botttom">
         <BorderBox4>
             <div class="day">
-                <div class="hostTitle">今日热词</div>
-                <div class="host_relation" ref="highCharts"></div>
+                <div class="hostTitle">数据来源：<span>网易新闻</span></div>
+                <div class="time">截至 {{UpdateTime}}</div>
             </div>
         </BorderBox4>
     </div>
 </template>
 <script setup>
 import { BorderBox4 } from '@kjgl77/datav-vue3'
+import { inject } from 'vue';
+let UpdateTime = inject("UpdateTime")
+console.log(UpdateTime);
 </script>
 <style lang="less" scoped>
 .right-botttom {
-    height: 15%;
+    height: 10%;
     width: 100%;
     :deep(.border-box-content)  {
-      padding: 20px;
+      padding: 24px 24px 16px;
       box-sizing: border-box;
       display: flex;
     }
@@ -24,14 +27,13 @@ import { BorderBox4 } from '@kjgl77/datav-vue3'
         display: flex;
         flex-direction: column;
         width: 100%;
+        color: #999;
+        .time {
+            text-align: right;
+        }
     }
     .hostTitle {
-        font-size: 16px;
-        padding-bottom: 10px;
-        font-weight: 700;
-    } 
-    .host_relation {
-        flex: 1;
+        margin-left: 12px;
     }
 }
 </style>

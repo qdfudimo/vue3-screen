@@ -13,4 +13,11 @@ export let debounce = (fn, delay) => {
             fn.apply(th, args);
         }, delays);
     };
+}/**
+ * 检查时不时一个空对象
+ * @param {*} obj 
+ * @returns false为空 true不为空
+ */
+export const checkNullObj =(obj)=>{
+   return Object.getOwnPropertyNames(obj).length !== 0
 }

@@ -10,43 +10,23 @@
 </template>
 <script setup>
 import { BorderBox6, ScrollRankingBoard } from '@kjgl77/datav-vue3';
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
+const props = defineProps({
+    areaList: {
+        type: Array,
+        default: []
+    }
+})
+watch(() => props.areaList, () => {
+    config.data = props.areaList
+})
 const config = reactive({
-    data: [
-        {
-            name: '周口',
-            value: 55
-        },
-        {
-            name: '南阳',
-            value: 120
-        },
-        {
-            name: '西峡',
-            value: 78
-        },
-        {
-            name: '驻马店',
-            value: 66
-        },
-        {
-            name: '新乡',
-            value: 80
-        },
-        {
-            name: '信阳',
-            value: 45
-        },
-        {
-            name: '漯河',
-            value: 29
-        }
-    ]
+    data: []
 })
 </script>
 <style lang="less" scoped>
 .right-center {
-    height: 35%;
+    height: 40%;
     width: 100%;
 
     :deep(.border-box-content) {
@@ -54,11 +34,13 @@ const config = reactive({
         box-sizing: border-box;
         display: flex;
     }
+
     .input {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
+
     .rankTitle {
         font-size: 16px;
         padding-bottom: 10px;

@@ -10,17 +10,18 @@
         <BorderBox11 title="新冠病毒疫情可视化" class="mainBox">
           <div class="main-container">
             <div class="left-chart-container">
-              <LeftTop />
-              <LeftBottom />
+              <LeftTop :confirmData="confirmData" />
+              <LeftBottom :cityList="cityList" />
             </div>
             <div class="middle-chart-container">
-              <CenterTop></CenterTop>
-              <CenterBottom></CenterBottom>
+              <CenterTop :MapCityList="MapCityList"></CenterTop>
+              <CenterBottom :xLabel="chinaCityDayList.xLabel" :conformData="chinaCityDayList.conformData">
+              </CenterBottom>
             </div>
             <div class="right-chart-container">
-              <RightTop/>
-              <RightCenter/>
-              <RightBottom/>
+              <RightTop :hightRelationList="hightRelationList" />
+              <RightCenter :areaList="areaList" />
+              <RightBottom />
             </div>
           </div>
         </BorderBox11>
@@ -29,7 +30,7 @@
   </div>
 </template>
 <script setup>
-import { provide } from 'vue';
+import { onBeforeMount, computed, provide, reactive, ref } from 'vue';
 import echarts from './util/commonEchart'
 import ScaleBox from "./components/scaleBox.vue"
 import LeftTop from "./components/leftContainer/LeftTop.vue"
@@ -40,7 +41,71 @@ import CenterBottom from './components/CenterContainer/CenterBottom.vue';
 import RightTop from './components/RightContainer/RightTop.vue';
 import RightCenter from './components/RightContainer/RightCenter.vue';
 import RightBottom from './components/RightContainer/RightBottom.vue';
+import { getChinaDayList, getWorldDayList } from "@/api/dayList";
+let confirmData = reactive({
+  today: {},
+  total: {}
+})
+let areaList = ref([]);
+let cityList = ref([]);
+let MapCityList = ref([]);
+let hightRelationList = ref([]);
+const UpdateTime = ref("")
+let chinaCityDayList = reactive({
+  xLabel: [],
+  conformData: []
+})
+onBeforeMount(() => {
+  getChinaDayList().then(res => {
+    if (res.code == 200) {
+      let { today = {}, total = {}, lastUpdateTime = "", chinaDayList = [] } = res.data
+      confirmData.today = today
+      confirmData.total = total
+      let xLabel = chinaDayList.map(item => item.date)
+      let conformData = chinaDayList.map(item => item.today.confirm)
+      chinaCityDayList.xLabel = xLabel
+      chinaCityDayList.conformData = conformData
+      UpdateTime.value = lastUpdateTime;
+    }
+  }).catch(error => {
+    console.log(error);
+  })
+  getWorldDayList().then(res => {
+    if (res.code == 200) {
+      let { chinaCityData = {}, areaTreeList = [] } = res.data
+      let { children = [] } = chinaCityData;
+      areaList.value = areaTreeList.map(item => {
+        return {
+          name: item.name,
+          value: item.today.confirm,
+        }
+      });
+      let list = children.map(item => {
+        return [item.name, item.today.confirm, item.total.confirm, item.total.dead, item.total.heal]
+      })
+      cityList.value = list;
+      //total.storeConfirm = total.confirm - total.dead - total.heal;
+      let MapList = children.map(item => {
+        let { total } = item
+        return {
+          name: item.name,
+          value: (total.confirm - total.dead - total.heal) || 0
+        }
+      })
+      MapCityList.value = MapList
+      let hightRelation = children.filter(item => item.today.confirm).map(item => {
+        return { name: item.name, value: item.today.confirm }
+      })
+      hightRelationList.value = hightRelation
+    }
+  }).catch(error => {
+    console.log(error);
+  })
+})
+
 provide("echarts", echarts)
+provide("UpdateTime", UpdateTime)
+
 const { width, height } = screen
 </script>
 <style scoped lang="less">
@@ -62,10 +127,11 @@ const { width, height } = screen
 //   }
 // }
 :deep(.border-box-content) {
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-  }
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+}
+
 .main-container {
   display: flex;
   height: 100%;
@@ -83,7 +149,7 @@ const { width, height } = screen
 
 .left-chart-container {
   width: 30%;
-  padding:20px 10px 0 10px;
+  padding: 20px 10px 0 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -100,7 +166,7 @@ const { width, height } = screen
 
 .right-chart-container {
   width: 30%;
-  padding:20px 10px 0 10px;
+  padding: 20px 10px 0 10px;
   box-sizing: border-box;
 }
 

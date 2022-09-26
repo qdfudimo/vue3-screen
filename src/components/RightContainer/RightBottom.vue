@@ -3,13 +3,14 @@
         <BorderBox4>
             <div class="day">
                 <div class="hostTitle">数据来源：<span>网易新闻</span></div>
+                <Decoration4 :reverse="true" style="width:100%;height:5px;margin: 8px 4px;" />
                 <div class="time">截至 {{UpdateTime}}</div>
             </div>
         </BorderBox4>
     </div>
 </template>
 <script setup>
-import { BorderBox4 } from '@kjgl77/datav-vue3'
+import { BorderBox4 ,Decoration4} from '@kjgl77/datav-vue3'
 import { inject } from 'vue';
 let UpdateTime = inject("UpdateTime")
 console.log(UpdateTime);

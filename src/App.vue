@@ -7,6 +7,8 @@
         width: width + 'px',
         height: height + 'px',
       }">
+        <div class="github"><a href="https://github.com/qdfudimo/vue3-screen" target="_blank"
+            rel="noopener noreferrer"><svg-icon name="github" style="color:#fff;fontSize:22px"></svg-icon>https://github.com/qdfudimo/vue3-screen</a></div>
         <BorderBox11 title="新冠病毒疫情可视化" class="mainBox">
           <div class="main-container">
             <div class="left-chart-container">
@@ -68,7 +70,7 @@ onBeforeMount(() => {
       UpdateTime.value = lastUpdateTime;
     }
   }).catch(error => {
-    console.log(error);
+    // console.log(error);
   })
   getWorldDayList().then(res => {
     if (res.code == 200) {
@@ -99,7 +101,7 @@ onBeforeMount(() => {
       hightRelationList.value = hightRelation
     }
   }).catch(error => {
-    console.log(error);
+    // console.log(error);
   })
 })
 
@@ -177,4 +179,15 @@ const { width, height } = screen
 // .logo.vue:hover {
 //   filter: drop-shadow(0 0 2em #42b883aa);
 // }
+.github {
+  position: fixed;
+  right: 10px;
+  top: 6px;
+  color: #fff;
+  z-index: 9999;
+  a {
+    color: #fff;
+    line-height: 22px;
+  }
+}
 </style>

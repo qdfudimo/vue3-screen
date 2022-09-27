@@ -13,7 +13,6 @@
 import { BorderBox4 ,Decoration4} from '@kjgl77/datav-vue3'
 import { inject } from 'vue';
 let UpdateTime = inject("UpdateTime")
-console.log(UpdateTime);
 </script>
 <style lang="less" scoped>
 .right-botttom {

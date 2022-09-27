@@ -2,7 +2,7 @@ import axios from 'axios';
 // console.log(
 //   import.meta.env, 1111);
 const service = axios.create({
-  baseURL: import.meta.env.VITE_NODE_ENV === 'development' ? '/api' : '/',
+  baseURL: import.meta.env.VITE_NODE_ENV === 'development' ? '/api' : '/serve',
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })

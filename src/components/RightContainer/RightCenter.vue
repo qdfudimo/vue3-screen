@@ -3,7 +3,7 @@
         <BorderBox6>
             <div class="input">
                 <div class="rankTitle">国外疫情数据排行</div>
-                <ScrollRankingBoard :config="config" />
+                <ScrollRankingBoard :config="config" class="RankingBoard" />
             </div>
         </BorderBox6>
     </div>
@@ -21,7 +21,8 @@ watch(() => props.areaList, () => {
     config.data = props.areaList
 })
 const config = reactive({
-    data: []
+    data: [],
+    waitTime: 1000000
 })
 </script>
 <style lang="less" scoped>
@@ -39,6 +40,12 @@ const config = reactive({
         display: flex;
         flex-direction: column;
         width: 100%;
+
+        .RankingBoard {
+            :deep(.ranking-info) {
+                font-size: 15px;
+            }
+        }
     }
 
     .rankTitle {

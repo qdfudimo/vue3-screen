@@ -32,7 +32,7 @@ let timer = null;
 let len = 0
 const changeLine = () => {
     timer = setInterval(() => {
-        if (len === xLabel.length) {
+        if (len === xLabel.value.length) {
             len = 0
         }
         lineChart.dispatchAction({

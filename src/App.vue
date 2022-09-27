@@ -9,7 +9,7 @@
       }">
         <div class="github"><a href="https://github.com/qdfudimo/vue3-screen" target="_blank"
             rel="noopener noreferrer"><svg-icon name="github" style="color:#fff;fontSize:22px"></svg-icon>https://github.com/qdfudimo/vue3-screen</a></div>
-        <BorderBox11 title="新冠病毒疫情可视化" class="mainBox">
+        <BorderBox11 title="新冠病毒疫情数据可视化" class="mainBox">
           <div class="main-container">
             <div class="left-chart-container">
               <LeftTop :confirmData="confirmData" />

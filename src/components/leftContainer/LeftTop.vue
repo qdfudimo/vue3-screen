@@ -24,7 +24,6 @@
 </template>
 <script setup>
 import { BorderBox3 } from '@kjgl77/datav-vue3';
-import { reactive, defineProps } from 'vue';
 import { MapKey } from "@/config/index.js";
 import { checkNullObj } from "@/util/index.js";
 // import Empty from "../Empty.vue";

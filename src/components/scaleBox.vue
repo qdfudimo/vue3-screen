@@ -9,16 +9,24 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { debounce } from "../util/index"
+import { debounce, os } from "../util/index"
 let scale = reactive({
-    w:1,
-    h:1,
+    w: 1,
+    h: 1,
 });
 const { width, height } = screen
+
 let getScale = () => {
-    const wh = window.innerHeight / height;
-    const ww = window.innerWidth / width;
-    return [wh,ww];
+    // const wh = window.innerHeight / height;
+    // const ww = window.innerWidth / width;
+    // return [wh,ww];
+    const w = window.innerWidth / width
+    const h = window.innerHeight / height
+    if (window.innerWidth <= 800 || window.innerHeight <= 600) {
+        let scale = w < h ? w : h;
+        return [scale, scale]
+    }
+    return [h, w]
 }
 let setScale = (e) => {
     // 缩放比
@@ -30,7 +38,7 @@ onMounted(() => {
     setScale();
     window.addEventListener("resize", reCalc);
 })
-onUnmounted(()=>{
+onUnmounted(() => {
     window.removeEventListener("resize", reCalc)
 })
 </script>
@@ -43,7 +51,8 @@ export default {
 <style lang="less" scoped>
 .ScaleBox {
     position: absolute;
-    transform: scale(v-bind('scale.w'),v-bind('scale.h')) translate(-50%, -50%);
+    // transform: scale(v-bind('scale.h')) translate(-50%, -50%);
+    transform: scale(v-bind('scale.w'), v-bind('scale.h')) translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     transform-origin: top left;

@@ -2,13 +2,23 @@
 
 <template>
   <div id="full-screen-container">
-    <ScaleBox>
+    <div v-if="!isPc" class="tips">
+      <div style="textAlign: center;">暂不支持手机端观看，PC端观看更佳</div>
+      <div class="smiling">
+        <svg-icon name="weixiao" style="color:#fff;fontSize:60px;"></svg-icon>
+      </div>
+      <div class="github blank"><a href="https://github.com/qdfudimo/vue3-screen" target="_blank" rel="noopener noreferrer">
+          <svg-icon name="github" style="color:#fff;fontSize:22px"></svg-icon>https://github.com/qdfudimo/vue3-screen
+        </a></div>
+    </div>
+    <ScaleBox v-else>
       <div class="main-warper" :style="{
         width: width + 'px',
         height: height + 'px',
       }">
-        <div class="github"><a href="https://github.com/qdfudimo/vue3-screen" target="_blank"
-            rel="noopener noreferrer"><svg-icon name="github" style="color:#fff;fontSize:22px"></svg-icon>https://github.com/qdfudimo/vue3-screen</a></div>
+        <div class="github"><a href="https://github.com/qdfudimo/vue3-screen" target="_blank" rel="noopener noreferrer">
+            <svg-icon name="github" style="color:#fff;fontSize:22px"></svg-icon>https://github.com/qdfudimo/vue3-screen
+          </a></div>
         <BorderBox11 title="新冠病毒疫情数据可视化" class="mainBox">
           <div class="main-container">
             <div class="left-chart-container">
@@ -44,10 +54,12 @@ import RightTop from './components/RightContainer/RightTop.vue';
 import RightCenter from './components/RightContainer/RightCenter.vue';
 import RightBottom from './components/RightContainer/RightBottom.vue';
 import { getChinaDayList, getWorldDayList } from "@/api/dayList";
+import { os } from "./util/index"
 let confirmData = reactive({
   today: {},
   total: {}
 })
+let isPc = os().isPc
 let areaList = ref([]);
 let cityList = ref([]);
 let MapCityList = ref([]);
@@ -185,9 +197,109 @@ const { width, height } = screen
   top: 5px;
   color: #fff;
   z-index: 9999;
+
   a {
     color: #fff;
     line-height: 22px;
+  }
+}
+
+.tips {
+  display: flex;
+  // align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  font-size: 18px;
+}
+.blank {
+  font-size: 14px;
+  left: 0;
+  animation: shining 0.1s alternate infinite;
+}
+.smiling {
+  // transform: scale(2,3);
+  // transition: all 1s;
+  // transform: translateX(100px);
+  // &:hover {
+  //   transform: scale(2);
+  // }
+  position: relative;
+  margin-top: 20px;
+  animation-name: scalego; // Q3
+  animation-timing-function: linear; // 动画速度曲线，匀速
+  animation-iteration-count: infinite; // 动画循环无限次播放
+  animation-duration: 8s;
+}
+
+@keyframes scalego {
+  0% {
+    transform: scale(1);
+    left: 0;
+  }
+
+  10% {
+    transform: scale(1.4);
+    left: 10%;
+  }
+
+  20% {
+    transform: scale(1.8);
+    left: 20%;
+  }
+
+  30% {
+    transform: scale(2);
+    left: 30%;
+  }
+
+  40% {
+    transform: scale(2);
+    left: 40%;
+  }
+
+  50% {
+    transform: scale(1.8) rotate(60deg);
+    left: 50%;
+  }
+
+  60% {
+    transform: scale(1.8);
+    left: 60%;
+  }
+
+  70% {
+    transform: scale(2) rotate(-60deg);
+    left: 70%;
+  }
+
+  80% {
+    transform: scale(2.6);
+    left: 80%;
+  }
+
+  90% {
+    transform: scale(2);
+    left: 90%;
+  }
+
+  100% {
+    transform: scale(1.2); //Q2
+    left: 100%;
+  }
+}
+@keyframes shining {
+  from {
+    text-shadow: 0 0 6px rgba(182, 211, 207, 0.9),
+      0 0 30px rgba(182, 211, 207, 0.3), 0 0 12px rgba(15, 115, 223, 0.5),
+      0 0 21px rgba(15, 115, 223, 0.9), 0 0 34px rgba(15, 115, 223, 0.8),
+      0 0 54px rgba(15, 115, 223, 0.9);
+  }
+  to {
+    text-shadow: 0 0 6px rgba(182, 211, 207, 1),
+      0 0 30px rgba(182, 211, 207, 0.4), 0 0 12px rgba(15, 115, 223, 0.6),
+      0 0 22px rgba(15, 115, 223, 0.8), 0 0 38px rgba(15, 115, 223, 0.9),
+      0 0 60px rgba(15, 115, 223, 1);
   }
 }
 </style>

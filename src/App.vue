@@ -182,7 +182,7 @@ const { width, height } = screen
 .github {
   position: fixed;
   right: 10px;
-  top: 6px;
+  top: 5px;
   color: #fff;
   z-index: 9999;
   a {

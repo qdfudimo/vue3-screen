@@ -51,7 +51,7 @@ const enterLine = () => {
     clearTime()
 }
 const leaveLine = () => {
-    changeLine()
+    props.xLabel.length && changeLine()
 }
 let dataTime = null;
 let XLen = xLabel.value.length || 7
@@ -242,7 +242,7 @@ onMounted(() => {
     watch(() => props.xLabel, () => {
         drawChats()
         if (lineChart) {
-            changeLine()
+            props.xLabel.length && changeLine()
             pushConformData()
         }
     })

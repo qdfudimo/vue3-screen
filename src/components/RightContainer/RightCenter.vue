@@ -22,7 +22,7 @@ watch(() => props.areaList, () => {
 })
 const config = reactive({
     data: [],
-    waitTime: 1000000
+    waitTime: 1000
 })
 </script>
 <style lang="less" scoped>
